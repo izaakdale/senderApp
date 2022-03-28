@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\WebhookServer\WebhookCall;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/sendwebhook', function () {
+
+    WebhookCall::create()
+        ->url('http://localhost:1972/webhook-receiving-url')
+        ->payload(['data' => 'dummyData'])
+        ->useSecret('izaak_webhook')
+        ->dispatch();
 });
